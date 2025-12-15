@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lựa chọn em ghệ - Booking Đội Bóng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        :root {
+            --primary-color: #070707;
+            --secondary-color: #4B0082;
+            --accent-color: #FF6B6B;
+            --light-color: #F8F9FA;
+            --dark-color: #212529;
+            --card-bg: #ffffff;
+            --shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding-top: 80px;
+            min-height: 100vh;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, var(--secondary-color) 0%, var(--primary-color) 100%) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 15px 0;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white !important;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar-brand i {
+            color: var(--accent-color);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .carousel {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .carousel-item img {
+            height: 500px;
+            object-fit: cover;
+        }
+
+        .carousel-caption {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            padding: 20px;
+            bottom: 40px;
+            left: 10%;
+            right: 10%;
+            animation: slideInUp 1s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            margin: 40px 0 30px;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
+            text-align: center;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+
+        h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            border-radius: 2px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            height: 100%;
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+
+        .card-img-top {
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-img-top {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            color: var(--secondary-color);
+            font-weight: 700;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .list-group-item {
+            border: none;
+            padding: 10px 15px;
+            color: #555;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .list-group-item::before {
+            content: '✓';
+            position: absolute;
+            left: 10px;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .list-group-item:nth-child(even) {
+            background-color: rgba(138, 43, 226, 0.05);
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: block;
+            width: 100%;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(138, 43, 226, 0.3);
+            background: linear-gradient(90deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+        }
+
+        .booking {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            transition: all 0.4s ease;
+            height: 100%;
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .booking:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .booking:nth-child(1) { animation-delay: 0.5s; }
+        .booking:nth-child(2) { animation-delay: 0.6s; }
+        .booking:nth-child(3) { animation-delay: 0.7s; }
+        .booking:nth-child(4) { animation-delay: 0.8s; }
+
+        .bokking-header img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .booking:hover .bokking-header img {
+            transform: scale(1.05);
+        }
+
+        .bokking-body {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cacemghe {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        footer {
+            background: linear-gradient(90deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .badge {
+            background-color: var(--accent-color);
+            font-size: 0.8rem;
+            padding: 5px 10px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .price-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(90deg, var(--accent-color) 0%, #FF8E53 100%);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            z-index: 2;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        @media (max-width: 768px) {
+            .cacemghe {
+                grid-template-columns: 1fr;
+            }
+            
+            .carousel-item img {
+                height: 300px;
+            }
+            
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-futbol"></i>
+                Các Em Ghệ
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#"><i class="fas fa-home"></i> Trang chủ</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="image/anhemdowny.jpg" class="d-block w-100" alt="Đội bóng">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Anh em bị downy</h5>
+                        <p>Dù bị down nhưng ae vẫn siêu sao được</p>
+                    </div>
+                </div>
+                <div class="carousel-item ">
+                    <img src="image/caochanhai.jpg" class="d-block w-100" alt="Đội bóng">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Em Đánh Rơi Người Yêu Này</h5>
+                        <p>Hội Anh Em Thiểu Năng</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="image/giadinhminion.jpg" class="d-block w-100" alt="Đội bóng">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Team siêu sao</h5>
+                        <p>Chúng tôi là những siêu sao thực thụ</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <h3 class="floating">Các em ghệ được Booking nhiều nhất</h3>
+        
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mb-5">
+            <div class="col">
+                <div class="card h-100">
+                    <div class="position-relative">
+                        <img src="image/sieýai.jpg" class="card-img-top" alt="Cao Chấn Hải">
+                        <div class="price-tag">950K</div>
+                    </div>
+                    <div class="card-body">
+                        <span class="badge">Được yêu thích</span>
+                        <h5 class="card-title">Cao Chấn Hải</h5>
+                        <p class="card-text">Luyện một chiêu 20000 lần nhưng vẫn đéo thành thạo được</p>
+                        <ul class="list-group list-group-flush">
+                            <h6 class="text-center text-danger fw-bold my-3">KỸ NĂNG ĐẶC BIỆT</h6>
+                            <li class="list-group-item">Phát đầu thằng nào không đỡ được là win</li>
+                            <li class="list-group-item">Chân như khúc gỗ, đỡ banh thì cứ kameha</li>
+                            <li class="list-group-item">Nếu bạn chửi nó, nó sẽ tấn công vào thận bạn</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary mt-3"><i class="fas fa-calendar-check"></i> Booking ngay</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col">
+                <div class="card h-100">
+                    <div class="position-relative">
+                        <img src="image/nguyentuanduy1.jpg" class="card-img-top" alt="Nguyễn Tuấn Duy">
+                        <div class="price-tag">890K</div>
+                    </div>
+                    <div class="card-body">
+                        <span class="badge">Siêu sao</span>
+                        <h5 class="card-title">Nguyễn Tuấn Duy</h5>
+                        <p class="card-text">Đừng để anh phải thích nghi và emoji</p>
+                        <ul class="list-group list-group-flush">
+                            <h6 class="text-center text-danger fw-bold my-3">KỸ NĂNG ĐẶC BIỆT</h6>
+                            <li class="list-group-item">Phát nó cứ gọi là khủng</li>
+                            <li class="list-group-item">Trình độ bước 1 thì nó cứ phải gọi là thượng thừa</li>
+                            <li class="list-group-item">Nếu thắng thì Emoji, nếu thua chúng mày đợi tao thích nghi</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary mt-3"><i class="fas fa-calendar-check"></i> Booking ngay</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col">
+                <div class="card h-100">
+                    <div class="position-relative">
+                        <img src="image/kietduong.jpg" class="card-img-top" alt="Dương Anh Kiệt">
+                        <div class="price-tag">920K</div>
+                    </div>
+                    <div class="card-body">
+                        <span class="badge">Cao ráo</span>
+                        <h5 class="card-title">Dương Anh Kiệt</h5>
+                        <p class="card-text">Mày có thể đánh giá là tao cao, nhưng đứng nhìn chiều cao mà đánh giá trình độ</p>
+                        <ul class="list-group list-group-flush">
+                            <h6 class="text-center text-danger fw-bold my-3">KỸ NĂNG ĐẶC BIỆT</h6>
+                            <li class="list-group-item">Siêu Sao</li>
+                            <li class="list-group-item">Skill đỉnh cao spam nhiều lần là nắm đấm</li>
+                            <li class="list-group-item">Chuyển 2 thì 100 cú được 1 cú. Lâu lâu siêu sao được 1 lần</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary mt-3"><i class="fas fa-calendar-check"></i> Booking ngay</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col">
+                <div class="card h-100">
+                    <div class="position-relative">
+                        <img src="image/AnhThanh.jpg" class="card-img-top" alt="Lê Đức Thành">
+                        <div class="price-tag">880K</div>
+                    </div>
+                    <div class="card-body">
+                        <span class="badge">Huấn luyện viên</span>
+                        <h5 class="card-title">Lê Đức Thành</h5>
+                        <p class="card-text">Huấn Luyện Viên Online Chuyên Đào Tạo các hạt giống nãy mầm</p>
+                        <ul class="list-group list-group-flush">
+                            <h6 class="text-center text-danger fw-bold my-3">KỸ NĂNG ĐẶC BIỆT</h6>
+                            <li class="list-group-item">Phát đầu mới vô là Auto không qua lưới</li>
+                            <li class="list-group-item">Đỡ bước 1 hên xui, 1 là hay 2 là ra ngoài</li>
+                            <li class="list-group-item">Siêu sao của đội cũng</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary mt-3"><i class="fas fa-calendar-check"></i> Booking ngay</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3>Các em ghệ có giá trị cực cao</h3>
+        
+        <div class="cacemghe">
+            <div class="booking">
+                <div class="bokking-header">
+                    <img src="image/emnamdinh.jpg" alt="Anh Nam Định">
+                </div>
+                <div class="bokking-body">
+                    <span class="badge">Giá trị cao</span>
+                    <h5 class="card-title">Anh Nam, Định Làm Gì Thế !!!</h5>
+                    <p class="card-text">Em ghệ có giá trị cực cao, trình độ siêu sao, kỹ năng đỉnh cao, booking ngay kẻo hết hàng</p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Không còn gì để bàn. Siêu sao Nam định, phát cứ gọi là cực điếm đĩ</li>
+                        <li class="list-group-item">Trình độ bước 1 thì phải gọi là khủng khiếp, chuyển 2 cứ gọi là siêu sao</li>
+                        <li class="list-group-item">Nhưng điểm yếu là hơi lùn, không siêu sao nhảy đập như em kiệt trên kia được</li>
+                    </ul>
+                    <div class="mt-auto">
+                        <div class="price-tag" style="position: static; margin: 15px 0;">1.250K</div>
+                        <a href="#" class="btn btn-primary"><i class="fas fa-bolt"></i> Booking ngay</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="booking">
+                <div class="bokking-header">
+                    <img src="image/thangmap.jpg" alt="Thắng mập">
+                </div>
+                <div class="bokking-body">
+                    <span class="badge">Mạnh mẽ</span>
+                    <h5 class="card-title">Idol Thành Đạt</h5>
+                    <p class="card-text">Phát thì ăn điểm nhưng gặp thằng biết đỡ bước một thì là con chuột tinh</p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">MÀY KHỦNG HẢ !!!! 😒😒</li>
+                        <li class="list-group-item">NẾU ĐÓ LÀ TAO !!!! 😎😎😎</li>
+                        <li class="list-group-item">KIỆT SAO MÀY CAO MÀ MÀY ĐẦN VẬY !!!</li>
+                        <li class="list-group-item">THÁCH MỌI TAY ĐẬP DƯỚI 1M7</li>
+                    </ul>
+                    <div class="mt-auto">
+                        <div class="price-tag" style="position: static; margin: 15px 0;">1.100K</div>
+                        <a href="#" class="btn btn-primary"><i class="fas fa-bolt"></i> Booking ngay</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="booking">
+                <div class="bokking-header">
+                    <img src="image/khoalun.jpg" alt="Nguyễn Đình Anh Khoa">
+                </div>
+                <div class="bokking-body">
+                    <span class="badge">Toàn diện</span>
+                    <h5 class="card-title">Nguyễn Đình Anh Khoa</h5>
+                    <p class="card-text">Em này thì toàn diện, nhưng được cái là sợ đau</p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Hất qua xong emoji gáy to</li>
+                        <li class="list-group-item">Đau tay thì phát kiểu điếm chó, không đau thì nhảy lên đập như siêu sao</li>
+                        <li class="list-group-item">Bị thằng mập var liên tục vì lùn nhưng cãi không lại</li>
+                    </ul>
+                    <div class="mt-auto">
+                        <div class="price-tag" style="position: static; margin: 15px 0;">1.050K</div>
+                        <a href="#" class="btn btn-primary"><i class="fas fa-bolt"></i> Booking ngay</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="booking">
+                <div class="bokking-header">
+                    <img src="image/khoacao.jpg" alt="Con đĩ của team">
+                </div>
+                <div class="bokking-body">
+                    <span class="badge">Điêu luyện</span>
+                    <h5 class="card-title">Con Đĩ Của Team</h5>
+                    <p class="card-text">Em thì được cái mỏ là điêu luyện</p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Đỡ bước 1 thì hay</li>
+                        <li class="list-group-item">Phát như mấy thằng beta</li>
+                        <li class="list-group-item">Như cái thằng bị down</li>
+                    </ul>
+                    <div class="mt-auto">
+                        <div class="price-tag" style="position: static; margin: 15px 0;">980K</div>
+                        <a href="#" class="btn btn-primary"><i class="fas fa-bolt"></i> Booking ngay</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script>
+        // Thêm hiệu ứng khi cuộn trang
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hiệu ứng cho các thẻ card khi xuất hiện trên màn hình
+            const cards = document.querySelectorAll('.card, .booking');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+            
+            // Hiệu ứng cho nút booking
+            const bookingButtons = document.querySelectorAll('.btn-primary');
+            bookingButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    this.classList.add('animate__animated', 'animate__pulse');
+                    setTimeout(() => {
+                        this.classList.remove('animate__animated', 'animate__pulse');
+                    }, 1000);
+                    
+                    // Hiển thị thông báo
+                    alert('Đã thêm vào danh sách booking!');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
