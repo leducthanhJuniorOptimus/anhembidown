@@ -470,6 +470,231 @@
             outline: none;
             box-shadow: 0 0 0 4px var(--ring-brand-medium);
         }
+        /* CSS Responsive cho phần Buy - Thêm vào phần <style> hiện tại */
+
+/* Điều chỉnh container buy */
+.buy {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0 20px;
+    margin-bottom: 50px;
+}
+
+/* Điều chỉnh pricing-card cơ bản */
+.pricing-card {
+    width: 100%;
+    max-width: 384px;
+    padding: 24px;
+    background-color: var(--neutral-primary-soft);
+    border: 1px solid var(--border-default);
+    border-radius: 8px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeInUp 0.8s ease-out;
+    animation-fill-mode: both;
+}
+
+.pricing-card:nth-child(1) { animation-delay: 0.1s; }
+.pricing-card:nth-child(2) { animation-delay: 0.2s; }
+.pricing-card:nth-child(3) { animation-delay: 0.3s; }
+
+.pricing-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive cho Tablet (768px - 1024px) */
+@media (max-width: 1024px) {
+    .buy {
+        gap: 30px;
+        padding: 0 15px;
+    }
+    
+    .pricing-card {
+        max-width: 340px;
+        padding: 20px;
+    }
+    
+    .price-amount {
+        font-size: 42px;
+    }
+    
+    .features-list {
+        margin: 20px 0;
+    }
+    
+    .features-list li {
+        margin-bottom: 14px;
+        font-size: 0.95rem;
+    }
+}
+
+/* Responsive cho Mobile Lớn (576px - 768px) */
+@media (max-width: 768px) {
+    .buy {
+        gap: 25px;
+        padding: 0 10px;
+    }
+    
+    .pricing-card {
+        max-width: 100%;
+        padding: 20px;
+    }
+    
+    .card-title {
+        font-size: 18px;
+        margin-bottom: 14px;
+    }
+    
+    .price-amount {
+        font-size: 38px;
+    }
+    
+    .price-period {
+        font-size: 14px;
+    }
+    
+    .features-list {
+        margin: 18px 0;
+    }
+    
+    .features-list li {
+        margin-bottom: 12px;
+        font-size: 0.9rem;
+    }
+    
+    .check-icon {
+        width: 18px;
+        height: 18px;
+        margin-right: 8px;
+    }
+    
+    .cta-button {
+        padding: 12px 16px;
+        font-size: 15px;
+    }
+}
+
+/* Responsive cho Mobile Nhỏ (< 576px) */
+@media (max-width: 576px) {
+    h1 {
+        font-size: 1.5rem !important;
+        padding: 0 15px;
+    }
+    
+    .buy {
+        gap: 20px;
+        padding: 0 10px;
+    }
+    
+    .pricing-card {
+        padding: 18px;
+        border-radius: 10px;
+    }
+    
+    .card-title {
+        font-size: 17px;
+        margin-bottom: 12px;
+    }
+    
+    .price-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .price-amount {
+        font-size: 36px;
+    }
+    
+    .price-period {
+        margin-left: 0;
+        margin-top: 4px;
+        font-size: 13px;
+    }
+    
+    .features-list {
+        margin: 16px 0;
+    }
+    
+    .features-list li {
+        margin-bottom: 10px;
+        font-size: 0.85rem;
+        align-items: flex-start;
+    }
+    
+    .check-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 6px;
+        margin-top: 2px;
+    }
+    
+    .feature-text {
+        flex: 1;
+        line-height: 1.4;
+    }
+    
+    .cta-button {
+        padding: 11px 14px;
+        font-size: 14px;
+        border-radius: 6px;
+    }
+}
+
+/* Responsive cho Mobile Rất Nhỏ (< 400px) */
+@media (max-width: 400px) {
+    .buy {
+        gap: 15px;
+    }
+    
+    .pricing-card {
+        padding: 16px;
+    }
+    
+    .card-title {
+        font-size: 16px;
+    }
+    
+    .price-amount {
+        font-size: 32px;
+    }
+    
+    .features-list li {
+        font-size: 0.8rem;
+    }
+    
+    .cta-button {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+}
+
+/* Đảm bảo các card luôn có chiều cao đồng đều trên cùng một hàng */
+@media (min-width: 769px) {
+    .buy {
+        align-items: stretch;
+    }
+    
+    .pricing-card {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .features-list {
+        flex-grow: 1;
+    }
+}
+
+/* Animation mượt mà hơn khi resize */
+.pricing-card,
+.card-title,
+.price-wrapper,
+.features-list,
+.cta-button {
+    transition: all 0.3s ease;
+}
     </style>
 </head>
 <body>
