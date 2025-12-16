@@ -695,6 +695,71 @@
 .cta-button {
     transition: all 0.3s ease;
 }
+
+.Weather {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 2rem;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .Weather-Header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .Weather-Header img {
+      width: 64px;
+      height: 64px;
+    }
+
+    h1, h2 {
+      margin: 0;
+      color: #333;
+    }
+
+    .forecast {
+      margin-top: 2rem;
+    }
+
+    .day {
+      border-top: 1px solid #ccc;
+      margin-top: 1rem;
+      padding-top: 1rem;
+    }
+
+    input[type="text"] {
+      padding: 0.5rem;
+      font-size: 16px;
+      width: 80%;
+      margin-bottom: 1rem;
+      border-radius: 6px;
+      border: 1px solid #aaa;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      background: #007acc;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #005f99;
+    }
     </style>
 </head>
 <body>
@@ -1196,6 +1261,91 @@
         
     </div>
 </div>
+<div class="Weather">
+    <div class="Weather-Header">
+      <img src="image/Weather.webp" alt="Weather Icon"/>
+      <h1>Dự Báo Thời Tiết</h1>
+    </div>
+
+    <input type="text" id="cityInput" placeholder="Nhập tên thành phố (vd: Hanoi)" />
+    <button onclick="fetchWeatherByCity()">Xem thời tiết</button>
+
+    <div id="weatherBox">
+      <p>Đang tải dữ liệu vị trí...</p>
+    </div>
+
+    <div class="forecast" id="forecastBox"></div>
+
+    <p id="location"></p>
+</div>
+
+<script src="config.js"></script>
+
+<script>
+
+
+    function fetchWeather(lat, lon) {
+      const url = `https://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=${lat},${lon}&days=3&lang=vi`;
+      fetchData(url);
+    }
+
+    function fetchWeatherByCity() {
+      const city = document.getElementById("cityInput").value.trim();
+      if (!city) return;
+      const url = `https://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=${encodeURIComponent(city)}&days=3&lang=vi`;
+      fetchData(url);
+    }
+
+    function fetchData(url) {
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          if (data.error) {
+            document.getElementById("weatherBox").innerHTML = `<p>Lỗi: ${data.error.message}</p>`;
+            document.getElementById("forecastBox").innerHTML = "";
+            return;
+          }
+
+          const current = `
+            <h2>${data.location.name}, ${data.location.country}</h2>
+            <p><strong>Nhiệt độ:</strong> ${data.current.temp_c}°C</p>
+            <p><strong>Trạng thái:</strong> ${data.current.condition.text}</p>
+            <img src="${data.current.condition.icon}" alt="icon thời tiết" />
+          `;
+
+          const forecastDays = data.forecast.forecastday.map(day => `
+            <div class="day">
+              <h3>${day.date}</h3>
+              <p>Nhiệt độ: ${day.day.avgtemp_c}°C</p>
+              <p>Thời tiết: ${day.day.condition.text}</p>
+              <img src="${day.day.condition.icon}" alt="icon" />
+            </div>
+          `).join("");
+
+          document.getElementById("weatherBox").innerHTML = current;
+          document.getElementById("forecastBox").innerHTML = `<h2>Dự báo 3 ngày tới</h2>${forecastDays}`;
+        })
+        .catch(err => {
+          console.error("Lỗi fetch:", err);
+          document.getElementById("weatherBox").innerHTML = "<p>Lỗi khi lấy dữ liệu thời tiết.</p>";
+          document.getElementById("forecastBox").innerHTML = "";
+        });
+    }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
+          document.getElementById("location").innerText = `Vị trí hiện tại: ${lat}, ${lon}`;
+          fetchWeather(lat, lon);
+        },
+        err => {
+          document.getElementById("location").innerText = "Không thể lấy vị trí người dùng.";
+        }
+      );
+    }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 </body>
 </html>
