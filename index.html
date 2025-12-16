@@ -1277,22 +1277,20 @@
     <div class="forecast" id="forecastBox"></div>
 
     <p id="location"></p>
-</div>
+  </div>
 
-<script src="config.js"></script>
-
-<script>
-
+  <script>
+    const apiKey = "1fd939e0567144f7abe94839252907";
 
     function fetchWeather(lat, lon) {
-      const url = `https://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=${lat},${lon}&days=3&lang=vi`;
+      const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${lat},${lon}&days=3&lang=vi`;
       fetchData(url);
     }
 
     function fetchWeatherByCity() {
       const city = document.getElementById("cityInput").value.trim();
       if (!city) return;
-      const url = `https://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=${encodeURIComponent(city)}&days=3&lang=vi`;
+      const url = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${encodeURIComponent(city)}&days=3&lang=vi`;
       fetchData(url);
     }
 
@@ -1345,7 +1343,7 @@
         }
       );
     }
-</script>
+  </script>
 <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
 </body>
 </html>
